@@ -1,0 +1,29 @@
+class Solution:
+    def solve(self, mat: List[List[str]]) -> None:
+        def dfs(i,j,mat,vis):
+            vis[i][j]=1
+            if i-1>=0 and mat[i-1][j]=='O' and vis[i-1][j]==0:
+                dfs(i-1,j,mat,vis)
+            if i+1<n and mat[i+1][j]=='O' and vis[i+1][j]==0:
+                dfs(i+1,j,mat,vis)
+            if j-1>=0 and mat[i][j-1]=='O' and vis[i][j-1]==0:
+                dfs(i,j-1,mat,vis)
+            if j+1<m and mat[i][j+1]=='O' and vis[i][j+1]==0:
+                dfs(i,j+1,mat,vis)
+        n=len(mat)
+        m=len(mat[0])
+        vis=[[0 for i in range(m)]for j in range(n)]
+        for col in range(m):
+            if mat[0][col]=='O' and vis[0][col]==0:
+                dfs(0,col,mat,vis)
+            if mat[n-1][col]=='O' and vis[n-1][col]==0:
+                dfs(n-1,col,mat,vis)
+        for row in range(n):
+            if mat[row][0]=='O' and vis[row][0]==0:
+                dfs(row,0,mat,vis)
+            if mat[row][m-1]=='O' and vis[row][m-1]==0:
+                dfs(row,m-1,mat,vis)
+        for i in range(n):
+            for j in range(m):
+                if mat[i][j]=='O' and vis[i][j]==0:
+                    mat[i][j]='X'
